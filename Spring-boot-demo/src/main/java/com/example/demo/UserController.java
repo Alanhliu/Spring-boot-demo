@@ -59,4 +59,8 @@ public class UserController {
         }
         return list;
     }
+
+    public void delete() {
+
+    }
 }
