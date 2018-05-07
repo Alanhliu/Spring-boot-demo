@@ -2,21 +2,17 @@ package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.ComponentScan;
 
-@RestController
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.example.demo"})
+@ServletComponentScan
 public class DemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
-
-	@RequestMapping(value = "/",produces = "text/plain;charset=UTF-8")
-	String index(){
-		return "Hello Spring Boot!";
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 }
 
 
