@@ -15,4 +15,8 @@ public interface UserMapper {
     void deleteByPrimaryKey(Integer uid);
 
     User updateByModel(User user);
+
+    int insert(User user);
+
+    int insertSelective(User user);
 }

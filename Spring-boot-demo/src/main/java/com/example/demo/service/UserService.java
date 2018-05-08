@@ -12,4 +12,8 @@ public interface UserService {
     void deleteUser(Integer uid);
 
     User updateUser(User user);
+
+    int addUser(User user);
+
+    int addUserSelective(User user);
 }

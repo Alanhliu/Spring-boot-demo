@@ -33,4 +33,14 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User user) {
         return userMapper.updateByModel(user);
     }
+
+    @Override
+    public int addUser(User user) {
+        return userMapper.insert(user);
+    }
+
+    @Override
+    public int addUserSelective(User user) {
+        return userMapper.insertSelective(user);
+    }
 }
