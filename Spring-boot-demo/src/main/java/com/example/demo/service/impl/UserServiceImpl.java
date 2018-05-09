@@ -25,12 +25,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserByName(String username) {
+        return userMapper.selectByUserName(username);
+    }
+
+    @Override
     public void deleteUser(Integer uid) {
         userMapper.deleteByPrimaryKey(uid);
     }
 
     @Override
-    public User updateUser(User user) {
+    public int updateUser(User user) {
         return userMapper.updateByModel(user);
     }
 

@@ -9,9 +9,11 @@ public interface UserService {
 
     User findUser(Integer uid);
 
+    User findUserByName(String username);
+
     void deleteUser(Integer uid);
 
-    User updateUser(User user);
+    int updateUser(User user);
 
     int addUser(User user);
 
