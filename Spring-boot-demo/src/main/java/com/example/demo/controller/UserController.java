@@ -44,6 +44,11 @@ public class UserController {
             //返回用户名或密码不正确
             Error error = new Error(Error.USER_NAME_OR_PWD_ERROR,"username or pwd error");
             throw new UserException(error);
+
+            //Map
+            //("status",404)
+            //("code",10001)
+            //("msg","USER_NOT_FOUND")
         }
 
         String token = TokenUtil.CreateToken(user.username,user.uid);
