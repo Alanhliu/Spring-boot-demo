@@ -2,12 +2,10 @@ package com.example.demo.exception;
 
 import com.example.demo.util.Error;
 
-public class UserException extends RuntimeException {
+public class AuthFailedException extends RuntimeException {
+    private Error error;
 
-
-
-    public Error error;
-    public UserException(Error error) {
+    public AuthFailedException(Error error) {
         this.error = error;
     }
 
