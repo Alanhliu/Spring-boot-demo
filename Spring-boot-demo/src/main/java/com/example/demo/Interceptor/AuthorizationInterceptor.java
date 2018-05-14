@@ -1,7 +1,9 @@
 package com.example.demo.Interceptor;
 
 import com.example.demo.exception.AuthFailedException;
+import com.example.demo.service.RedisService;
 import com.example.demo.util.Error;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -15,6 +17,8 @@ import com.example.demo.annotation.Authorization;
 @Component
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
+    @Autowired
+    private RedisService redisService;
 
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
@@ -25,11 +29,21 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         //从header中得到token
-        String authorization = request.getHeader("demo_token");
+        String requestToken = request.getHeader("demo_token");
 
-        if (authorization != null && authorization.equals("123456")) {
+
+        String uid = (String) redisService.get(requestToken);
+        String currentToken = (String) redisService.get(uid);
+
+        if (currentToken != null && !currentToken.equals(requestToken)) {
+            redisService.delete(requestToken);
+            System.out.println("您的账号在其他设备登录!");
+            throw new AuthFailedException(new Error(Error.USER_AUTH_OTHER_DEVICE));
+        }
+
+        if (requestToken != null && uid != null) {
             //如果token验证成功，将token对应的用户id存在request中，便于之后注入
-            request.setAttribute("uid", 1);
+            request.setAttribute("uid", uid);
             return true;
         }
 

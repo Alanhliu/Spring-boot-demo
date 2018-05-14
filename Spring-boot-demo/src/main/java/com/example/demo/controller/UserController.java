@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.annotation.Authorization;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.User;
+import com.example.demo.service.RedisService;
 import com.example.demo.util.Error;
 import com.example.demo.service.UserService;
 import com.example.demo.util.R;
@@ -10,6 +11,7 @@ import com.example.demo.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RedisService redisService;
 
 
     @RequestMapping(value = "/login",method = {RequestMethod.POST})
@@ -34,6 +39,10 @@ public class UserController {
         }
 
         String token = TokenUtil.CreateToken(user.username,user.uid);
+
+        redisService.set(user.getUid().toString(),token);
+        redisService.set(token,user.getUid().toString());
+
         Map map = new HashMap();
         map.put("uid",user.uid);
         map.put("msg","login success");
@@ -51,8 +60,10 @@ public class UserController {
 
     @Authorization
     @RequestMapping(value = "/self",method = {RequestMethod.GET})
-    public R getUserSelf() {
-        User user = userService.findUser(1);
+    public R getUserSelf(HttpServletRequest request) {
+
+        int uid = Integer.parseInt(request.getAttribute("uid").toString());
+        User user = userService.findUser(uid);
         if (user == null) {
             throw new NotFoundException(new Error(Error.USER_NOT_FOUND));
         }
@@ -96,15 +107,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}",method = {RequestMethod.PUT})
-    public User updateUser(@PathVariable Integer id, @ModelAttribute User userForm) {
+    public R updateUser(@PathVariable Integer id, User userForm) {
 
         User user = userService.findUser(id);
+
         if (user == null) {
             throw new NotFoundException(new Error(Error.USER_NOT_FOUND));
         }
 
-        userService.updateUser(userForm);
+        userForm.setUid(id);
 
-        return user;
+        userService.updateUser(userForm);
+        user = userService.findUser(id);
+
+
+        return R.ok(user);
     }
 }

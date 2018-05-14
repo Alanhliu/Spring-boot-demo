@@ -27,7 +27,7 @@ spring:
         open: true  # 是否开启redis缓存  true开启   false关闭
         database: 0
         host: 180.76.143.195
-        port: 6379
+        port: 8001
         password:       # 密码（默认为空）
         timeout: 6000  # 连接超时时长（毫秒）
         pool:
