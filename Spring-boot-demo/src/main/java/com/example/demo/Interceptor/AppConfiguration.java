@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-@EnableWebMvc
+//@EnableWebMvc
 @Configuration
 public class AppConfiguration extends WebMvcConfigurerAdapter {
 
@@ -23,8 +23,10 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
 
         registry.addInterceptor(authorizationInterceptor())
                 .addPathPatterns("/user/**")
-                .excludePathPatterns("/user/login")
-                .excludePathPatterns("/user/list");
+                .excludePathPatterns("/user/login");
+
+//        registry.addInterceptor(authorizationInterceptor())
+//                .addPathPatterns("/user/login");
         super.addInterceptors(registry);
     }
 }

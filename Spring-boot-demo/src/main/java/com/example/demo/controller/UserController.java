@@ -8,6 +8,9 @@ import com.example.demo.util.Error;
 import com.example.demo.service.UserService;
 import com.example.demo.util.R;
 import com.example.demo.util.TokenUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Api("和用户相关的Api")
 @RestController
 @RequestMapping("/user")
 public class UserController {

@@ -31,6 +31,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         //从header中得到token
         String requestToken = request.getHeader("demo_token");
 
+        if (requestToken == null) {
+            throw new AuthFailedException(new Error(Error.USER_AUTH_FAILED));
+        }
 
         String uid = (String) redisService.get(requestToken);
         String currentToken = (String) redisService.get(uid);
