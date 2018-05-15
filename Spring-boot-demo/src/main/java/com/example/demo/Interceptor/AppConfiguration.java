@@ -21,9 +21,9 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
 
-        registry.addInterceptor(authorizationInterceptor())
-                .addPathPatterns("/user/**")
-                .excludePathPatterns("/user/login");
+//        registry.addInterceptor(authorizationInterceptor())
+//                .addPathPatterns("/user/**")
+//                .excludePathPatterns("/user/login");
 
 //        registry.addInterceptor(authorizationInterceptor())
 //                .addPathPatterns("/user/login");

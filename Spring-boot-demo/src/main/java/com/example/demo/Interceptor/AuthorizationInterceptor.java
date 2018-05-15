@@ -36,6 +36,9 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         }
 
         String uid = (String) redisService.get(requestToken);
+        if (uid == null) {
+            throw new AuthFailedException(new Error(Error.USER_AUTH_FAILED));
+        }
         String currentToken = (String) redisService.get(uid);
 
         if (currentToken != null && !currentToken.equals(requestToken)) {

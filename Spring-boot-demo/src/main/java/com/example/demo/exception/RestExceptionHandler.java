@@ -2,6 +2,7 @@ package com.example.demo.exception;
 
 import com.example.demo.util.Error;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @ControllerAdvice
