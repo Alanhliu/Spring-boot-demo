@@ -19,8 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api("和用户相关的Api")
-@RestController
+@Api(value = "/user", description = "Operations about user")@RestController
 @RequestMapping("/user")
 public class UserController {
 
